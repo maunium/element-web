@@ -15,10 +15,8 @@ import {
     RelationType,
     type MatrixClient,
     THREAD_RELATION_TYPE,
-    M_POLL_END,
     M_POLL_START,
     M_LOCATION,
-    M_BEACON_INFO,
 } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 
@@ -46,23 +44,7 @@ export function isContentActionable(mxEvent: MatrixEvent): boolean {
     // status is SENT before remote-echo, null after
     const isSent = !eventStatus || eventStatus === EventStatus.SENT;
 
-    if (isSent && !mxEvent.isRedacted()) {
-        if (mxEvent.getType() === "m.room.message") {
-            const content = mxEvent.getContent();
-            if (content.msgtype && content.msgtype !== "m.bad.encrypted" && content.hasOwnProperty("body")) {
-                return true;
-            }
-        } else if (
-            mxEvent.getType() === "m.sticker" ||
-            M_POLL_START.matches(mxEvent.getType()) ||
-            M_POLL_END.matches(mxEvent.getType()) ||
-            M_BEACON_INFO.matches(mxEvent.getType())
-        ) {
-            return true;
-        }
-    }
-
-    return false;
+    return isSent;
 }
 
 export function canEditContent(matrixClient: MatrixClient, mxEvent: MatrixEvent): boolean {
