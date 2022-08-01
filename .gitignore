@@ -42,3 +42,6 @@ storybook-static
 # vitepress
 /docs/.vitepress/dist
 /docs/.vitepress/cache
+
+/matrix-js-sdk
+/packages/matrix-js-sdk
