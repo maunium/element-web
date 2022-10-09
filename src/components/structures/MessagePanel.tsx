@@ -45,7 +45,7 @@ import type EditorStateTransfer from "../../utils/EditorStateTransfer";
 import { Action } from "../../dispatcher/actions";
 import { getEventDisplayInfo } from "../../utils/EventRenderingUtils";
 import { type IReadReceiptPosition } from "../views/rooms/ReadReceiptMarker";
-import { haveRendererForEvent } from "../../events/EventTileFactory";
+import { haveRendererForEvent, hideableSenders } from "../../events/EventTileFactory";
 import { editorRoomKey } from "../../Editing";
 import { hasThreadSummary } from "../../utils/EventUtils";
 import { type BaseGrouper } from "./grouper/BaseGrouper";
@@ -466,7 +466,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
             return false; // ignored = no show (only happens if the ignore happens after an event was received)
         }
 
-        if (this.showHiddenEvents && !forceHideEvents) {
+        if (this.showHiddenEvents && !forceHideEvents && !hideableSenders.has(mxEv.getSender())) {
             return true;
         }
 
