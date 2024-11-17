@@ -24,6 +24,8 @@ export enum E2ePadlockIcon {
     /** Compound ErrorSolid icon in red */
     Warning = "warning",
 
+    Redacted = "viewingRedacted",
+
     /** Compound ErrorSolid icon in grey */
     DecryptionFailure = "decryption_failure",
 }

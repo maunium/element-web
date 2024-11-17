@@ -18,6 +18,8 @@
         "unread_messages": "Unread messages.",
         "user_menu": "User menu"
     },
+    "This is a deleted message": "This is a deleted message",
+    "View content": "View content",
     "a11y_jump_first_unread_room": "Jump to first unread room.",
     "action": {
         "accept": "Accept",
