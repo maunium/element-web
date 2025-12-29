@@ -6,7 +6,7 @@ SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Com
 Please see LICENSE files in the repository root for full details.
 */
 
-import React, { type ReactNode } from "react";
+import React, { type MouseEventHandler, type ReactNode} from "react";
 import { decode } from "blurhash";
 import { type MediaEventContent } from "matrix-js-sdk/src/types";
 import { logger } from "matrix-js-sdk/src/logger";
@@ -306,11 +306,22 @@ class MVideoBodyInner extends React.PureComponent<IProps, IState> {
 
         const contentUrl = this.getContentUrl();
         const thumbUrl = this.getThumbUrl();
+        const loop = Boolean(content.info?.["fi.mau.loop"]);
+        const controls = !content.info?.["fi.mau.hide_controls"];
         let poster: string | undefined;
         let preload = "metadata";
         if (content.info && thumbUrl) {
             poster = thumbUrl;
             preload = "none";
+        }
+        let onMouseOver: MouseEventHandler<HTMLVideoElement> | undefined;
+        let onMouseOut: MouseEventHandler<HTMLVideoElement> | undefined;
+        if (!autoplay && !controls) {
+            onMouseOver = (event: React.MouseEvent<HTMLVideoElement>) => (event.target as HTMLVideoElement).play();
+            onMouseOut = (event: React.MouseEvent<HTMLVideoElement>) => {
+                (event.target as HTMLVideoElement).pause();
+                (event.target as HTMLVideoElement).currentTime = 0;
+            };
         }
 
         const fileBody = this.getFileBody();
@@ -322,7 +333,8 @@ class MVideoBodyInner extends React.PureComponent<IProps, IState> {
                         ref={this.videoRef}
                         src={contentUrl}
                         title={content.body}
-                        controls={!this.props.inhibitInteraction}
+                        controls={controls && !this.props.inhibitInteraction}
+                        loop={loop}
                         // Disable downloading as it doesn't work with e2ee video,
                         // users should use the dedicated Download button in the Message Action Bar
                         controlsList="nodownload"
@@ -330,6 +342,8 @@ class MVideoBodyInner extends React.PureComponent<IProps, IState> {
                         muted={autoplay}
                         autoPlay={autoplay}
                         poster={poster}
+                        onMouseOver={onMouseOver}
+                        onMouseOut={onMouseOut}
                         onPlay={this.videoOnPlay}
                     />
                     {spaceFiller}

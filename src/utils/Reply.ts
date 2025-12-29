@@ -65,7 +65,7 @@ export function makeReplyMixIn(ev?: MatrixEvent): IEventRelation {
     return mixin;
 }
 
-export function shouldDisplayReply(event: MatrixEvent): boolean {
+export function shouldDisplayReply(event: MatrixEvent, prevEv?: MatrixEvent): boolean {
     if (event.isRedacted()) {
         return false;
     }
@@ -80,7 +80,7 @@ export function shouldDisplayReply(event: MatrixEvent): boolean {
         return false;
     }
 
-    return !!inReplyTo.event_id;
+    return !!inReplyTo.event_id && (!prevEv || prevEv.getId() !== inReplyTo.event_id);
 }
 
 export function addReplyToMessageContent(content: IContent, replyToEvent: MatrixEvent): void {

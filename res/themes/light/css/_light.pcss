@@ -10,13 +10,12 @@
 /* Noto Color Emoji contains digits, in fixed-width, therefore causing
    digits in flowed text to stand out.
    TODO: Consider putting all emoji fonts to the end rather than the front. */
-$font-family:
-    "Inter", var(--emoji-font-family), "Apple Color Emoji", "Segoe UI Emoji", "Arial", "Helvetica", sans-serif,
-    "Noto Color Emoji";
+/* meow: prefer sensible emoji fonts (apple, google) over crappy ones (twemoji) */
+$font-family: "Inter", "Apple Color Emoji", "Noto Color Emoji", "Twemoji", "Segoe UI Emoji", "Arial", "Helvetica",
+    sans-serif, "STIXGeneral";
 
-$monospace-font-family:
-    "Inconsolata", var(--emoji-font-family), "Apple Color Emoji", "Segoe UI Emoji", "Courier", monospace,
-    "Noto Color Emoji";
+$monospace-font-family: "Fira Code", "Inconsolata", "Consolas", "Liberation Mono", "Apple Color Emoji",
+    "Noto Color Emoji", "Courier", monospace;
 
 /* Colors from Figma Compound https://www.figma.com/file/X4XTH9iS2KGJ2wFKDqkyed/Compound?node-id=559%3A120 */
 /* ******************** */
@@ -78,7 +77,7 @@ $accent-1400: var(--cpd-color-green-1400);
 /* ******************** */
 $inverted-bg-color: var(--cpd-color-bg-action-primary-rest);
 $header-panel-bg-color: var(--cpd-color-bg-subtle-primary);
-$header-panel-bg-hover: var(--cpd-color-gray-200);
+$header-panel-bg-hover: var(--cpd-color-bg-action-secondary-hovered);
 /* ******************** */
 
 /* Theme specific colors */
@@ -245,6 +244,8 @@ $togglesw-ball-color: var(--cpd-color-bg-action-primary-rest);
 $authpage-primary-color: #232f32;
 $authpage-bg-color: #2e3649;
 $authpage-modal-bg-color: $roomlist-bg-color;
+/* background colour of the modal, when the background is blurred */
+$authpage-modal-content-with-blur-bg-color: rgb(255, 255, 255, 0.59);
 $authpage-focus-bg-color: $focus-bg-color;
 $authpage-lang-color: $secondary-content;
 $authpage-primary-color: $primary-content;
@@ -289,7 +290,7 @@ $eventbubble-bg-hover: var(--cpd-color-bg-subtle-secondary);
    it hardcoded to the following value */
 $lightbox-fg-color: #fff;
 $lightbox-background-bg-color: #000;
-$lightbox-background-bg-opacity: 0.95;
+$lightbox-background-bg-opacity: 0.85;
 /* ******************** */
 
 /* VoIP */
@@ -343,11 +344,6 @@ $focus-brightness: 105%;
     --lp-background-blur: 40px;
 }
 
-/* ******************** */
-
-/* Icon URLs */
-/* ******************** */
-$copy-button-url: "@vector-im/compound-design-tokens/icons/copy.svg";
 /* ******************** */
 
 /* Location sharing */

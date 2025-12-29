@@ -10,6 +10,7 @@ module.exports = {
     extends: ["plugin:matrix-org/babel", "plugin:matrix-org/react", "plugin:matrix-org/a11y"],
     parserOptions: {
         project: ["./tsconfig.json"],
+        tsconfigRootDir: __dirname,
     },
     env: {
         browser: true,
@@ -166,6 +167,10 @@ module.exports = {
                     {
                         group: ["@vector-im/compound-design-tokens/icons/*"],
                         message: "Please use @vector-im/compound-design-tokens/assets/web/icons/* instead",
+                    },
+                    {
+                        group: ["**/packages/shared-components/**", "../packages/shared-components/**"],
+                        message: "Please use @element-hq/web-shared-components",
                     },
                 ],
             },

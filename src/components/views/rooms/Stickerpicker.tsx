@@ -59,8 +59,8 @@ export default class Stickerpicker extends React.PureComponent<IProps, IState> {
 
     private prevSentVisibility?: boolean;
 
-    private popoverWidth = 300;
-    private popoverHeight = 300;
+    private popoverWidth = 400;
+    private popoverHeight = 450;
     // This is loaded by _acquireScalarClient on an as-needed basis.
     private scalarClient: ScalarAuthClient | null = null;
 
@@ -224,8 +224,8 @@ export default class Stickerpicker extends React.PureComponent<IProps, IState> {
         const messaging = WidgetMessagingStore.instance.getMessagingForUid(
             WidgetUtils.calcWidgetUid(this.state.stickerpickerWidget.id),
         );
-        if (messaging && visible !== this.prevSentVisibility) {
-            messaging.updateVisibility(visible).catch((err) => {
+        if (messaging?.widgetApi && visible !== this.prevSentVisibility) {
+            messaging.widgetApi.updateVisibility(visible).catch((err) => {
                 logger.error("Error updating widget visibility: ", err);
             });
             this.prevSentVisibility = visible;
